@@ -104,7 +104,7 @@ ISO 3166-1 numeric code,Location,2021
 50,            Bangladesh,   166 303
 64,            Bhutan,    780
 356,            India,  1 393 409
-364,            Iran (Islamic Republic of),   85 029
+364,            Iran,   85 029
 462,            Maldives,    544
 524,            Nepal,   29 675
 586,            Pakistan,   225 200
@@ -118,7 +118,7 @@ ISO 3166-1 numeric code,Location,2021
 408,            Dem. People's Republic of Korea,   25 887
 392,            Japan,   126 051
 496,            Mongolia,   3 329
-410,            Republic of Korea,   51 305
+410,            South Korea,   51 305
 920,         South-Eastern Asia,   675 118
 96,            Brunei Darussalam,    442
 116,            Cambodia,   16 946
@@ -130,7 +130,7 @@ ISO 3166-1 numeric code,Location,2021
 702,            Singapore,   5 897
 764,            Thailand,   69 951
 626,            Timor-Leste,   1 344
-704,            Viet Nam,   98 169
+704,            Vietnam,   98 169
 1830,      Latin America and the Caribbean,   659 744
 915,         Caribbean,   43 762
 660,            Anguilla,    15
@@ -155,9 +155,9 @@ ISO 3166-1 numeric code,Location,2021
 652,            Saint Barthélemy,    10
 659,            Saint Kitts and Nevis,    54
 662,            Saint Lucia,    184
-663,            Saint Martin (French part),    39
+663,            Saint Martin,    39
 670,            Saint Vincent and the Grenadines,    111
-534,            Sint Maarten (Dutch part),    43
+534,            Sint Maarten,    43
 780,            Trinidad and Tobago,   1 403
 796,            Turks and Caicos Islands,    39
 850,            United States Virgin Islands,    104
@@ -172,19 +172,19 @@ ISO 3166-1 numeric code,Location,2021
 591,            Panama,   4 382
 931,         South America,   434 260
 32,            Argentina,   45 606
-68,            Bolivia (Plurinational State of),   11 833
+68,            Bolivia ,   11 833
 76,            Brazil,   213 993
 152,            Chile,   19 212
 170,            Colombia,   51 266
 218,            Ecuador,   17 888
-238,            Falkland Islands (Malvinas),    4
+238,            Falkland Islands,    4
 254,            French Guiana,    306
 328,            Guyana,    790
 600,            Paraguay,   7 220
 604,            Peru,   33 359
 740,            Suriname,    592
 858,            Uruguay,   3 485
-862,            Venezuela (Bolivarian Republic of),   28 705
+862,            Venezuela ,   28 705
 927,      Australia/New Zealand,   30 649
 36,         Australia,   25 788
 554,         New Zealand,   4 861
@@ -199,7 +199,7 @@ ISO 3166-1 numeric code,Location,2021
 316,            Guam,    170
 296,            Kiribati,    121
 584,            Marshall Islands,    60
-583,            Micronesia (Fed. States of),    116
+583,            Micronesia,    116
 520,            Nauru,    11
 580,            Northern Mariana Islands,    58
 585,            Palau,    18
@@ -223,7 +223,7 @@ ISO 3166-1 numeric code,Location,2021
 616,               Poland,   37 797
 498,               Republic of Moldova,   4 024
 642,               Romania,   19 128
-643,               Russian Federation,   145 912
+643,               Russia,   145 912
 703,               Slovakia,   5 461
 804,               Ukraine,   43 467
 924,            Northern Europe,   106 713
@@ -272,4 +272,4 @@ ISO 3166-1 numeric code,Location,2021
 124,            Canada,   38 068
 304,            Greenland,    57
 666,            Saint Pierre and Miquelon,    6
-840,            United States of America,   332 915
+840,            United States,   332 915
