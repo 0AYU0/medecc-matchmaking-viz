@@ -26,7 +26,7 @@ fig.add_trace(go.Scattergeo(
         cmax=1,
         cmin=0,
         color=df['availability'],
-        line_width=0.5,
+        line_width=0,
         sizemode='area',
         colorbar=dict(
             title="Availability"
