@@ -1,31 +1,20 @@
 import plotly.graph_objects as go
-
 import pandas as pd
+import dash
+from dash import dcc
+from dash import html
 
 # read CSVs into dataframes
-patient_df = pd.read_csv('patient_data.csv')
 caregiver_df = pd.read_csv('clinician_data.csv')
+caregiver_distances_df = pd.read_csv('caregiver_distances.csv')
 
 # define scale for marker sizes
 scale = 500
-patient_df['text'] = patient_df['country'] + '<br>User Type: Patient'
 caregiver_df['text'] = caregiver_df['country'] + '<br>User Type: Caregiver'
 
 fig = go.Figure()
 
-# add data from patient CSVs
-fig.add_trace(go.Scattergeo(
-  locationmode='USA-states',
-  lon=patient_df['longitude'],
-  lat=patient_df['latitude'],
-  text=patient_df['text'],
-  marker=dict(
-      size=5,
-      color='rgb(255,182,193)',
-      line_width=0,
-      sizemode='area',
-  )))
-# add data from caregiver CSVs
+# add caregiver user data
 fig.add_trace(go.Scattergeo(
   locationmode='USA-states',
   lon=caregiver_df['longitude'],
@@ -43,4 +32,34 @@ fig.add_trace(go.Scattergeo(
       ),
       colorscale="mint"
   )))
-fig.show()
+
+# add caregiver distances data
+for i in range(len(caregiver_distances_df)):
+  fig.add_trace(
+    go.Scattergeo(
+        locationmode = 'USA-states',
+        lon = [caregiver_distances_df['patient_lon'][i], caregiver_distances_df['caregiver_lon'][i]],
+        lat = [caregiver_distances_df['patient_lat'][i], caregiver_distances_df['caregiver_lat'][i]],
+        mode = 'lines',
+        line = dict(width = 2,color = 'red'),
+        opacity = float(caregiver_distances_df['distance'].min()) / float(caregiver_distances_df['distance'][i]),
+    )
+  )
+
+fig.update_layout(
+    title_text = 'MedECC Caregiver Matchmaking Visualization<br>(Hover for Caregiver Country and Location)',
+    showlegend = False,
+    geo = dict(
+      showland = True,
+      landcolor = 'rgb(243, 243, 243)',
+      countrycolor = 'rgb(204, 204, 204)',
+    ),
+)
+fig.update_geos(lataxis_showgrid=True, lonaxis_showgrid=True)
+
+app = dash.Dash()
+app.layout = html.Div([
+    dcc.Graph(figure=fig)
+])
+
+app.run_server(debug=True, use_reloader=False)

@@ -1,22 +1,34 @@
-library(plotly)
-library(dplyr)
-library(htmlwidgets)
-library(widgetframe)
-library(stringr)
-library(htmltools)
+import plotly.graph_objects as go
+import pandas as pd
 
-df <- data.frame(lab = c("Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"),
-            par= c("", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve"),
-            ID = c(1,11,12,121,122,13,14,141,15),
-            parentID =c(NA,1,1,12,12,1,1,14,1),
-            val = c(10, 14, 12, 10, 2, 6, 6, 4, 4))
+df_flight_paths = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv')
+df_flight_paths.head()
 
-fig2 <- plot_ly(ids=df$ID,
-               labels = df$lab,
-               parents = df$parentID,
-               values = df$val,
-               type = 'sunburst',
-               maxdepth=2,
-               hovertemplate = paste('%{label}','<br>%{value} EUR<extra></extra>','<br>Anteil an %{parent}','%{percentParent: .1%}'),
-                            )
-fig2
+fig = go.Figure()
+
+flight_paths = []
+for i in range(len(df_flight_paths)):
+    fig.add_trace(
+        go.Scattergeo(
+            locationmode = 'USA-states',
+            lon = [df_flight_paths['start_lon'][i], df_flight_paths['end_lon'][i]],
+            lat = [df_flight_paths['start_lat'][i], df_flight_paths['end_lat'][i]],
+            mode = 'lines',
+            line = dict(width = 1,color = 'red'),
+            opacity = float(df_flight_paths['cnt'][i]) / float(df_flight_paths['cnt'].max()),
+        )
+    )
+
+fig.update_layout(
+    title_text = 'Feb. 2011 American Airline flight paths<br>(Hover for airport names)',
+    showlegend = False,
+    geo = dict(
+        scope = 'north america',
+        projection_type = 'azimuthal equal area',
+        showland = True,
+        landcolor = 'rgb(243, 243, 243)',
+        countrycolor = 'rgb(204, 204, 204)',
+    ),
+)
+
+fig.show()

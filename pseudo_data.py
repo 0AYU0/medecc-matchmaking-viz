@@ -48,15 +48,12 @@ def random_point_in_country(country_name):
 
 
 f = open('clinician_data.csv', 'w')
-g = open('patient_data.csv', 'w')
 
-with f, g:
-  fnames = ['index', 'country', 'longitude', 'latitude', 'availability', 'user_type']
+with f:
+  fnames = ['index', 'country', 'longitude', 'latitude', 'availability']
   # sets fields of CSV and ensure each line ends with new line
   caregiver_writer = csv.DictWriter(f, fieldnames=fnames, lineterminator='\n')
-  patient_writer = csv.DictWriter(f, fieldnames=fnames, lineterminator='\n')
   caregiver_writer.writeheader()
-  patient_writer.writeheader()
 
   for i in range(100):
     rand = random.randrange(runningSum)
@@ -68,7 +65,7 @@ with f, g:
         # normal distribution for availability to represent load balancing
         rand_availability = numpy.random.normal(0.5, 0.2)
         # proportion of caregivers and patients to depict
-        caregiver_or_patient = 'Caregiver' if random.random() > 0.7 else 'Patient'
+        #caregiver_or_patient = 'Caregiver' if random.random() > 0.7 else 'Patient'
         if location != -1 and rand_availability > 0:
           # define and write simulated data in a dictionary
           user_data = {
@@ -77,10 +74,7 @@ with f, g:
             'longitude': location[0], 
             'latitude': location[1], 
             'availability': rand_availability, 
-            'user_type': caregiver_or_patient,
+            #'user_type': caregiver_or_patient,
             }
-          if caregiver_or_patient == 'Caregiver':
-            caregiver_writer.writerow(user_data)
-          else:
-            patient_writer.writerow(user_data)
+        caregiver_writer.writerow(user_data)
 f.close()
