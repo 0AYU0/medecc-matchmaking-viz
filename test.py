@@ -1,34 +1,27 @@
-import plotly.graph_objects as go
-import pandas as pd
 
-df_flight_paths = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_february_aa_flight_paths.csv')
-df_flight_paths.head()
+import datetime
+import pytz
+from timezonefinder import TimezoneFinder
 
-fig = go.Figure()
+def calculateTimezoneOffset(patient_latitude, patient_longitude, caregiver_latitude, caregiver_longitude):
+    tf = TimezoneFinder()
+    patient_timezone_str = tf.timezone_at(lng=patient_longitude, lat=patient_latitude)
+    caregiver_timezone_str = tf.timezone_at(lng=caregiver_longitude, lat=caregiver_latitude)
 
-flight_paths = []
-for i in range(len(df_flight_paths)):
-    fig.add_trace(
-        go.Scattergeo(
-            locationmode = 'USA-states',
-            lon = [df_flight_paths['start_lon'][i], df_flight_paths['end_lon'][i]],
-            lat = [df_flight_paths['start_lat'][i], df_flight_paths['end_lat'][i]],
-            mode = 'lines',
-            line = dict(width = 1,color = 'red'),
-            opacity = float(df_flight_paths['cnt'][i]) / float(df_flight_paths['cnt'].max()),
-        )
-    )
+    patient_timezone = pytz.timezone(patient_timezone_str)
+    caregiver_timezone = pytz.timezone(caregiver_timezone_str)
+    dt = datetime.datetime.now()
+    patient_offset = patient_timezone.utcoffset(dt)
+    caregiver_offset = caregiver_timezone.utcoffset(dt)
+    offset = 0
+    if(patient_offset > caregiver_offset):
+      offset = patient_offset - caregiver_offset
+    else:
+      offset = caregiver_offset - patient_offset
+    offset = offset.total_seconds() / 3600
+    return offset
 
-fig.update_layout(
-    title_text = 'Feb. 2011 American Airline flight paths<br>(Hover for airport names)',
-    showlegend = False,
-    geo = dict(
-        scope = 'north america',
-        projection_type = 'azimuthal equal area',
-        showland = True,
-        landcolor = 'rgb(243, 243, 243)',
-        countrycolor = 'rgb(204, 204, 204)',
-    ),
-)
-
-fig.show()
+print(calculateTimezoneOffset(45.2461607143057, 11.876255373891928, 40.958357872077656, -72.19747275736566))
+for i in range(0, 2):
+    file_name_string = 'caregiver_distances' + str(i) + '.csv'
+    print(file_name_string)
